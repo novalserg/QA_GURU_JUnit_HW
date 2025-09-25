@@ -1,4 +1,5 @@
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.*;
 import java.util.stream.Stream;
@@ -19,18 +20,19 @@ public class ParametrizedTest {
         $(byText("Лучшие блоги")).shouldBe(visible);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Проверяем поиск и результат через CsvSource")
     @CsvSource(value = {
             "MacBook M4 , Ноутбук Apple MacBook Air 15” MC7A4 (M4 10-Core, GPU 10-Core, 16GB, 256GB) («Голубое небо» | Sky Blue)",
             "IPhone 16 , Смартфон Apple iPhone 16 128 ГБ (Белый | White)",
     })
+    @Tag("SMOKE")
     void searchItemsTest(String searchQuery, String searchResult){
         open("https://biggeek.ru/");
         $("#search-header-middle").setValue(searchQuery);
         $(byText(searchResult)).shouldBe(visible);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Проверяем поиск и результат через MethodSource")
     @MethodSource()
     void searchItemsMethodSourceTest(String searchQuery, String searchResult){
         open("https://biggeek.ru/");
